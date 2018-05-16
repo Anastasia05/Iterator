@@ -202,7 +202,41 @@ class Dek
 		ElementDek* pred;
 		ElementDek* sled;
 	} *nach, *kon;
+
 public:
+	class DekIterator
+	{
+		ElementDek *pointer;
+
+	public:
+		DekIterator(ElementDek *el)
+		{
+			pointer = el;
+		}
+
+		void operator--(int)
+		{
+			pointer = pointer->sled;
+		}
+
+		void operator++(int)
+		{
+			pointer = pointer->pred;
+		}
+
+		myTip operator*()
+		{
+			return pointer->znach;
+		}
+	};
+	DekIterator begin()
+	{
+		return  *(new DekIterator(nach));
+	}
+	DekIterator end()
+	{
+		return *(new DekIterator(kon));
+	}
 	void Vnach(myTip x) // Положить в начало
 	{
 		if (!nach)
@@ -335,10 +369,9 @@ public:
 };
 
 
-
 int main()
 {
-	setlocale(0, "");
+	/*setlocale(0, "");
 	Queue<char> bukva('\0');
 	Queue<char> cifra('\0');
 	Queue<char> znak('\0');
@@ -388,7 +421,13 @@ int main()
 	while (cifra.pust() == false)
 		cout << cifra.pull();
 	while (znak.pust() == false)
-		cout << znak.pull();
+		cout << znak.pull();*/
+	Dek<int> d(5);
+	d.Vnach(7);
+	Dek<int>::DekIterator iter = d.begin();
+	cout << *iter;
+	iter++;
+	cout << *iter;
 	return 0;
 
 }
